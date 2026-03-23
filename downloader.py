@@ -460,6 +460,21 @@ def get_children(session: requests.Session, drive_id: str,
     return all_items
 
 
+def get_item_name(session: requests.Session, drive_id: str,
+                  item_id: str) -> Optional[str]:
+    """Fetch just the name of a drive item. Returns None on failure."""
+    try:
+        r = session.get(
+            f"{API_BASE}/drives/{drive_id}/items/{item_id}"
+            f"?$select=id,name",
+            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT),
+        )
+        r.raise_for_status()
+        return r.json().get("name")
+    except Exception:
+        return None
+
+
 def get_item_details(session: requests.Session, drive_id: str,
                      item_id: str) -> dict:
     """Fetch the download URL for a single item."""
@@ -817,29 +832,32 @@ async def main():
         print("Example: python downloader.py 'https://1drv.ms/f/...' ~/Downloads/footage")
         sys.exit(1)
 
-    shared_url  = sys.argv[1]
-    destination = os.path.expanduser(
-        sys.argv[2] if len(sys.argv) > 2 else "~/Downloads/onedrive_download"
-    )
-
-    # Create destination folder early so the log file can live there
-    os.makedirs(destination, exist_ok=True)
-    log_path = os.path.join(destination, LOG_FILENAME)
-
-    global log
-    log = setup_logging(log_path)
-
-    log.info("=== Session start === url=%s dest=%s", shared_url, destination)
+    shared_url    = sys.argv[1]
     shutdown_flag = {"stop": False}
 
     try:
         token, drive_id, root_item_id = await get_badger_token(shared_url)
     except RuntimeError as e:
         print(f"\u2717 {e}")
-        log.error("Startup failed: %s", e)
         sys.exit(1)
 
     session = make_session(token)
+
+    # Derive default destination from the root folder name
+    if len(sys.argv) > 2:
+        destination = os.path.expanduser(sys.argv[2])
+    else:
+        root_name   = get_item_name(session, drive_id, root_item_id)
+        folder_name = root_name if root_name else "onedrive_download"
+        destination = os.path.expanduser(f"~/Downloads/{folder_name}")
+
+    # Create destination folder early so the log file can live there
+    os.makedirs(destination, exist_ok=True)
+
+    global log
+    log = setup_logging(os.path.join(destination, LOG_FILENAME))
+    log.info("=== Session start === url=%s dest=%s", shared_url, destination)
+
     download_all(session, drive_id, root_item_id, destination, shutdown_flag)
 
     if not shutdown_flag["stop"]:

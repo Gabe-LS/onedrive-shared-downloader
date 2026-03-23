@@ -52,8 +52,11 @@ def main():
         sys.exit(1)
 
     downloader = os.path.join(SCRIPT_DIR, "downloader.py")
-    result = subprocess.run([VENV_PYTHON, downloader] + sys.argv[1:])
-    sys.exit(result.returncode)
+    try:
+        result = subprocess.run([VENV_PYTHON, downloader] + sys.argv[1:])
+        sys.exit(result.returncode)
+    except KeyboardInterrupt:
+        sys.exit(0)
 
 
 if __name__ == "__main__":

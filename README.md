@@ -82,7 +82,7 @@ It will download and set up everything automatically. This may take a few minute
 
 ## Step 4 — Download
 
-First, get your OneDrive link: open the shared OneDrive folder in your browser and copy the full URL from the address bar — it should look something like:
+First, get your OneDrive link. Use the original shared link you received — it should look something like:
 
 ```
 https://1drv.ms/f/c/abc123/...
@@ -90,12 +90,12 @@ https://1drv.ms/f/c/abc123/...
 
 Then, in the terminal (open it again following Step 2 if you closed it), type the following command, replacing the example URL with the link you just copied.
 
-**macOS / Linux** (note: the URL must be inside single quotes):
+**macOS / Linux** — the URL must be inside single quotes:
 ```
 python3 run.py 'https://1drv.ms/f/c/...'
 ```
 
-**Windows** (note: the URL must be inside double quotes):
+**Windows** — the URL must be inside double quotes:
 ```
 python run.py "https://1drv.ms/f/c/..."
 ```
@@ -115,7 +115,7 @@ Add the destination path after the URL:
 python3 run.py 'https://1drv.ms/f/c/...' ~/Desktop/my-folder
 ```
 
-**Windows** (replace `your-username` with your Windows username):
+**Windows** — replace `your-username` with your Windows username:
 ```
 python run.py "https://1drv.ms/f/c/..." C:\Users\your-username\Desktop\my-folder
 ```

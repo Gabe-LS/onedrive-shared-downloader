@@ -39,20 +39,18 @@ If you see `Python 3.10` or a higher number, you're good. If you see `Python 2.x
 
 ## Step 2 — Open a terminal in the tool folder
 
-A terminal is a text window where you type commands. You need to open it inside the folder where you saved the files from this tool (the `onedrive-shared-downloader-main` folder you downloaded in Step 1).
-
 **macOS:**
 1. Open the **Terminal** app — press `Command + Space`, type `Terminal`, press Enter
-2. Open **Finder** and navigate to the `onedrive-shared-downloader-main` folder
+2. Open **Finder** and navigate to the `onedrive-shared-downloader-main` folder — it should be in your `Downloads` folder
 3. In Terminal, type `cd ` (the letters c, d, and a space — do not press Enter yet)
-4. Click on the folder in Finder, then drag it into the Terminal window — the folder path will appear automatically after `cd `
+4. Click on the `onedrive-shared-downloader-main` folder in Finder, then drag it into the Terminal window — the folder path will appear automatically after `cd `
 5. Press Enter
 
 **Windows:**
 1. Open **File Explorer** — press `Windows + E` or click the folder icon in the taskbar
 2. Navigate to the `onedrive-shared-downloader-main` folder — it should be in your `Downloads` folder
 3. Click once on the address bar at the top of the File Explorer window (the bar that shows the folder path — it will turn blue and show the full path)
-4. Type `cmd` (replacing whatever was there) and press Enter — a black Command Prompt window will open in the right folder
+4. Type `cmd` (replacing whatever was there) and press Enter — a Command Prompt window will open in the right folder
 
 ---
 
